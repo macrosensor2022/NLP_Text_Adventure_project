@@ -1,0 +1,123 @@
+{
+  "turn": 0,
+  "events": [],
+  "player": {
+    "name": "Adventurer",
+    "current_room": "tavern",
+    "inventory": [],
+    "hp": 100,
+    "max_hp": 100,
+    "skills": { "lockpick": 2, "persuasion": 3 }
+  },
+  "rooms": {
+    "tavern": {
+      "id": "tavern",
+      "name": "The Rusty Flagon",
+      "description": "A dimly lit tavern with creaky floorboards. The smell of stale ale hangs in the air. A fire crackles in the corner.",
+      "exits": { "north": "hallway", "east": "cellar_stairs" },
+      "items": ["rusty_key", "torch"],
+      "npcs": ["barkeep"],
+      "locked": false,
+      "requires": null
+    },
+    "hallway": {
+      "id": "hallway",
+      "name": "Stone Hallway",
+      "description": "A narrow stone corridor. Torchlight flickers on damp walls.",
+      "exits": { "south": "tavern", "east": "armory", "north": "courtyard" },
+      "items": [],
+      "npcs": [],
+      "locked": false,
+      "requires": null
+    },
+    "armory": {
+      "id": "armory",
+      "name": "Old Armory",
+      "description": "Rusted weapons line the walls. A few look salvageable.",
+      "exits": { "west": "hallway" },
+      "items": ["iron_sword", "wooden_shield"],
+      "npcs": [],
+      "locked": true,
+      "requires": "rusty_key"
+    },
+    "cellar_stairs": {
+      "id": "cellar_stairs",
+      "name": "Cellar Stairway",
+      "description": "A narrow spiral staircase descends into darkness.",
+      "exits": { "west": "tavern", "down": "cellar" },
+      "items": [],
+      "npcs": [],
+      "locked": false,
+      "requires": null
+    },
+    "cellar": {
+      "id": "cellar",
+      "name": "Wine Cellar",
+      "description": "Rows of dusty barrels fill the damp cellar. Something shuffles in the dark.",
+      "exits": { "up": "cellar_stairs" },
+      "items": ["health_potion"],
+      "npcs": ["giant_rat"],
+      "locked": false,
+      "requires": null
+    },
+    "courtyard": {
+      "id": "courtyard",
+      "name": "Castle Courtyard",
+      "description": "Overgrown grass pushes through cracked flagstones. A broken fountain stands in the center.",
+      "exits": { "south": "hallway" },
+      "items": ["old_map"],
+      "npcs": ["wandering_merchant"],
+      "locked": false,
+      "requires": null
+    }
+  },
+  "items": {
+    "rusty_key": {
+      "id": "rusty_key", "name": "Rusty Key",
+      "description": "A heavy iron key covered in rust.",
+      "is_weapon": false, "is_key": true, "damage": 0, "unlocks": "armory"
+    },
+    "torch": {
+      "id": "torch", "name": "Wooden Torch",
+      "description": "A simple torch that provides light.",
+      "is_weapon": false, "is_key": false, "damage": 0, "unlocks": null
+    },
+    "iron_sword": {
+      "id": "iron_sword", "name": "Iron Sword",
+      "description": "A battered but functional sword.",
+      "is_weapon": true, "is_key": false, "damage": 15, "unlocks": null
+    },
+    "wooden_shield": {
+      "id": "wooden_shield", "name": "Wooden Shield",
+      "description": "A round wooden shield with iron bands.",
+      "is_weapon": false, "is_key": false, "damage": 0, "unlocks": null
+    },
+    "health_potion": {
+      "id": "health_potion", "name": "Health Potion",
+      "description": "A small glass vial filled with red liquid.",
+      "is_weapon": false, "is_key": false, "damage": 0, "unlocks": null
+    },
+    "old_map": {
+      "id": "old_map", "name": "Faded Map",
+      "description": "An old parchment showing the castle layout.",
+      "is_weapon": false, "is_key": false, "damage": 0, "unlocks": null
+    }
+  },
+  "npcs": {
+    "barkeep": {
+      "id": "barkeep", "name": "Greta the Barkeep",
+      "description": "A stout woman with kind eyes and strong arms.",
+      "current_room": "tavern", "attitude": 30, "dialogue_state": "default", "hp": 50
+    },
+    "giant_rat": {
+      "id": "giant_rat", "name": "Giant Rat",
+      "description": "A rat the size of a dog. Its eyes gleam red.",
+      "current_room": "cellar", "attitude": -80, "dialogue_state": "default", "hp": 25
+    },
+    "wandering_merchant": {
+      "id": "wandering_merchant", "name": "Elric the Merchant",
+      "description": "A thin man in a travel-worn cloak surrounded by trinkets.",
+      "current_room": "courtyard", "attitude": 0, "dialogue_state": "default", "hp": 30
+    }
+  }
+}
