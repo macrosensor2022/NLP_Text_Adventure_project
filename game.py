@@ -3,6 +3,10 @@ game.py - playable terminal prototype
 """
 
 from world_state import WorldState
+from input_parser import parse_input
+from models import  Intent
+
+
 
 def main():
     ws = WorldState.load("game_state.json")
@@ -19,85 +23,70 @@ def main():
         raw = input("> ").strip().lower()
         if not raw:
             continue
-        parts = raw.split(maxsplit=1)
-        cmd = parts[0]
-        arg = parts[1] if len(parts) > 1 else ""
 
-        if cmd == "go":
-            if not arg:
-                print("Go Where?")
-            else:
-                success, msg = ws.move_player(arg)
-                print(msg)
-                if success:
-                    print()
-                    print(ws.look())
-        elif cmd == "take":
-            if not arg:
-                print("Take What?")
-            else:
-                item = ws.find_item_by_name(arg)
-                if item and ws.is_item_in_room(item.id, ws.get_current_room().id):
-                    _, msg = ws.take_item(item.id)
-                    print(msg)
+        action = parse_input(raw, ws)
+        if action.intent == Intent.SYSTEM:
+            if action.verb == "look":
+                print(ws.look())
+            elif action.verb in ("inventory", "inv", "i"):
+                items = ws.get_player_inventory()
+                if items:
+                    print("You are carrying:")
+                    for item in items:
+                        print(f" - {item.name}:{item.description}")
                 else:
-                    print("You don't see that here.")
-        
-        elif cmd == "drop":
-            if not arg:
-                print("Drop What?")
+                    print("You are carrying nothing.")
+            elif action.verb == "status":
+                print(ws.get_status())
+            elif action.verb == "context":
+                import json
+                print(json.dumps(ws.world.model_dump(), indent=2))
+            elif action.verb == "save":
+                ws.save("game_state.json")
+            elif action.verb in ("quit","exit","q"):
+                print("Farewell, adventurer!")
+                break
+            elif action.verb == "help":
+                print("Try natural language ! Examples:")
+                print("  'go north' or 'walk to the north'")
+                print("  'grab the rusty key' or 'pick up the torch'")
+                print("  'attack the rat' or 'hit the giant rat'")
+                print("  'talk to greta'")
+                print("  look | inventory | status | context | save | quit")
             else:
-                item = ws.find_item_by_name(arg)
-                if item and ws.player_has_item(item.id):
-                    _, msg = ws.drop_item(item.id)
-                    print(msg)
-                else:
-                    print("You don't have that item.")
-        
-        elif cmd == "use":
-            if not arg:
-                print("Use What?")
-            else:
-                item = ws.find_item_by_name(arg)
-                if item and ws.player_has_item(item.id):
-                    _, msg = ws.use_item(item.id)
-                    print(msg)
-                else:
-                    print("You don't have that item.")
-        elif cmd == "look":
-            print(ws.look())
-        
-        elif cmd in ("inventory", "inv", "i"):
-            items = ws.get_player_inventory()
-            if items:
-                print("You are carrying:")
-                for item in items:
-                    print(f" - {item.name}:{item.description}")
-            else:
-                print("You are carrying nothing.")
-        
-        elif cmd == "status":
-            print(ws.get_status())
-        
-        elif cmd == "context":
-            import json
-            print(json.dumps(ws.world.model_dump(), indent=2))
-        
-        elif cmd == "save":
-            ws.save("game_state.json")
-        
-        elif cmd in ("quit","exit","q"):
-            print("Farewell, adventurer!")
-            break
-
-        elif cmd == "help":
-            print("go <dir> | take <item> | drop <item> | use <item>")
-            print("look | inventory | status | context | save | quit")
-        
+                print(f"Unknown command. Type 'help'.")
         else:
-            print(f"Unknown command: {cmd} Type help")
-
+            ok, msg = ws.check_preconditions(action)
+            if not ok:
+                print(msg)
+            else:
+                if action.intent == Intent.MOVEMENT:
+                    success, msg = ws.move_player(action.direction)
+                    print(msg)
+                    if success:
+                        print()
+                        print(ws.look())
+                elif action.intent == Intent.INVENTORY:
+                    if action.verb == "take":
+                        _, msg = ws.take_item(action.target)
+                        print(msg)
+                    elif action.verb == "drop":
+                        _, msg = ws.drop_item(action.target)
+                        print(msg)
+                    elif action.verb in ("use", "equip"):
+                        _, msg = ws.use_item(action.target)
+                        print(msg)
+                elif action.intent == Intent.COMBAT:
+                    print(f"You attack the {action.target}! (combat system coming soon)")
+                elif action.intent == Intent.DIALOGUE:
+                    print(f"You talk to the {action.target}! (dialogue system coming soon)")
+                elif action.intent == Intent.INTERACTION:
+                    print(f"You try to {action.verb}. (interaction system coming soon)")
         print()
+
+
 
 if __name__ == "__main__":
     main()
+
+      
