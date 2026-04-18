@@ -19,13 +19,39 @@ The core game engine that owns all ground-truth state. The LLM will act as narra
 - Context package builder for LLM prompt injection
 - Rollback-safe state resolution for LLM-suggested changes
 
+### Layer 2: NLP Input Parser (Complete)
+
+Natural language understanding layer using spaCy. Players can type free-form English instead of rigid keyword commands.
+
+**Capabilities:**
+- spaCy-powered parsing using the `en_core_web_sm` language model
+- 40+ verb synonyms mapped to 7 intent categories (MOVEMENT, INVENTORY, COMBAT, DIALOGUE, INTERACTION, SOCIAL_INTERACTION, SYSTEM)
+- Dependency tree extraction — finds targets via dobj, pobj, advcl, dative, and prepositional phrase traversal
+- Fuzzy entity matching — maps natural words like "rusty key", "greta", "rat" to game entity IDs (`rusty_key`, `barkeep`, `giant_rat`)
+- Instrument detection — parses "with"/"using" phrases for item requirements
+- Direction extraction from natural sentences (e.g. "walk to the north")
+- Integrated into the game loop with precondition checking before action execution
+
+**Example inputs that work:**
+| Input | Parsed As |
+|-------|-----------|
+| `go north` | MOVEMENT, direction=north |
+| `walk to the north` | MOVEMENT, direction=north |
+| `grab the rusty key` | INVENTORY, take, target=rusty_key |
+| `I want to pick up the sword` | INVENTORY, take, target=iron_sword |
+| `attack the rat` | COMBAT, attack, target=giant_rat |
+| `talk to greta` | DIALOGUE, talk, target=barkeep |
+| `examine the shield` | INTERACTION, examine, target=wooden_shield |
+| `unlock the door with the key` | INTERACTION, unlock, requires=[rusty_key] |
+
 ## Files
 
 | File | Description |
 |------|-------------|
 | `models.py` | Pydantic data models — `Room`, `Item`, `NPC`, `Player`, `GameWorld`, `Intent`, `ParsedAction`, etc. |
 | `world_state.py` | State engine — load/save, queries, precondition checks, mutations, event logging, LLM context builder |
-| `game.py` | Playable terminal prototype with text commands |
+| `input_parser.py` | NLP parser — spaCy-powered natural language understanding, verb mapping, entity matching, dependency extraction |
+| `game.py` | Playable terminal prototype with NLP-powered input |
 | `game_state.json` | Game world data — 6 rooms, 6 items, 3 NPCs |
 | `test_layer1.py` | 37 tests covering all engine functionality |
 
@@ -40,7 +66,8 @@ The core game engine that owns all ground-truth state. The LLM will act as narra
 ### Prerequisites
 
 ```
-pip install pydantic
+pip install pydantic spacy
+python -m spacy download en_core_web_sm
 ```
 
 ### Run Tests
@@ -57,19 +84,23 @@ Runs 37 tests covering loading, queries, preconditions, inventory, movement, loc
 python game.py
 ```
 
-**Commands:**
+**Commands — supports natural language:**
 
-| Command | Action |
-|---------|--------|
-| `go <direction>` | Move (north, south, east, west, up, down) |
-| `take <item>` | Pick up an item |
-| `drop <item>` | Drop an item |
-| `use <item>` | Use an item (e.g. unlock a door) |
+| What you can type | What happens |
+|-------------------|--------------|
+| `go north` / `walk to the north` / `north` | Move in a direction |
+| `grab the rusty key` / `take the key` / `pick up the torch` | Pick up an item |
+| `drop the torch` / `toss the key` | Drop an item |
+| `use the rusty key` / `equip the sword` | Use an item |
+| `attack the rat` / `hit the giant rat` / `fight the rat` | Attack an NPC (placeholder) |
+| `talk to greta` / `speak with elric` | Talk to an NPC (placeholder) |
+| `examine the shield` / `inspect the map` / `read the map` | Interact with objects (placeholder) |
 | `look` | Describe current room |
-| `inventory` | List carried items |
+| `inventory` / `i` | List carried items |
 | `status` | Show HP and inventory |
 | `context` | Dump full game state JSON |
 | `save` | Save game to file |
+| `help` | Show example commands |
 | `quit` | Exit the game |
 
 ## Architecture
@@ -79,8 +110,8 @@ Player Input
     │
     ▼
 ┌──────────────┐
-│  NLP Parser  │  (Layer 2 — planned)
-│  Intent +    │
+│  NLP Parser  │  (Layer 2 — complete)
+│  spaCy +     │  input_parser.py
 │  Entities    │
 └──────┬───────┘
        │ ParsedAction
@@ -106,6 +137,6 @@ Player Input
 
 ## Planned Layers
 
-- **Layer 2:** NLP Parser — classify player intent, extract entities from free text
+- ~~**Layer 2:** NLP Parser — classify player intent, extract entities from free text~~ **Done**
 - **Layer 3:** LLM Integration — narrative generation, dialogue, dynamic storytelling
 - **Layer 4:** Advanced mechanics — combat system, skill checks, quest tracking
