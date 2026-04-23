@@ -5,11 +5,33 @@ game.py - playable terminal prototype
 from world_state import WorldState
 from input_parser import parse_input
 from models import Intent
-from inference import generate_npc_reply
+from inference import generate_npc_reply, generate_journal_summary
 from npc_memory import NPCMemoryRepository
+from journal_repo import load_journal, rebuild_journal
+import json
 
 DEFAULT_DIALOGUE_FALLBACK = "They do not respond."
 NO_NPC_DIALOGUE_FALLBACK = "Are you talking to yourself right now? There is no one here."
+
+
+def render_journal_text(journal_data):
+    clues = journal_data.get("discovered_clues", []) or []
+    summaries = journal_data.get("conversation_summaries", []) or []
+
+    lines = ["Discovered clues"]
+    if clues:
+        lines.extend(f"- {entry}" for entry in clues)
+    else:
+        lines.append("- No discovered clues logged yet.")
+
+    lines.append("")
+    lines.append("Conversation summaries")
+    if summaries:
+        lines.extend(f"- {entry}" for entry in summaries)
+    else:
+        lines.append("- No conversation summaries logged yet.")
+
+    return "\n".join(lines)
 
 
 def main():
@@ -18,7 +40,7 @@ def main():
     print("=" * 50)
     print("  TEXT ADVENTURE — Engine Prototype")
     print("  Commands: go, take, drop, use, look,")
-    print("  inventory, status, context, save, quit")
+    print("  inventory, status, journal, context, save, quit")
     print("=" * 50)
     print()
     print(ws.look())
@@ -27,6 +49,13 @@ def main():
     while True:
         raw = input("> ").strip()
         if not raw:
+            continue
+        if raw.lower() == "read journal":
+            journal_data = load_journal()
+            journal_text = render_journal_text(journal_data)
+            print("== Journal ==")
+            print(journal_text)
+            print()
             continue
 
         action = parse_input(raw, ws)
@@ -43,9 +72,15 @@ def main():
                     print("You are carrying nothing.")
             elif action.verb == "status":
                 print(ws.get_status())
+            elif action.verb == "journal":
+                journal_data = rebuild_journal(ws, memory_repo)
+                journal_text = generate_journal_summary(
+                    discovered_clues=journal_data.get("discovered_clues", []),
+                    conversation_summaries=journal_data.get("conversation_summaries", []),
+                )
+                print("== Journal ==")
+                print(journal_text)
             elif action.verb == "context":
-                import json
-
                 print(json.dumps(ws.world.model_dump(), indent=2))
             elif action.verb == "save":
                 ws.save("game_state.json")
@@ -58,7 +93,7 @@ def main():
                 print("  'grab the rusty key' or 'pick up the torch'")
                 print("  'attack the rat' or 'hit the giant rat'")
                 print("  'talk to greta'")
-                print("  look | inventory | status | context | save | quit")
+                print("  look | inventory | status | journal | read journal | context | save | quit")
             else:
                 print(f"Unknown command. Type 'help'.")
         else:

@@ -64,7 +64,7 @@ VERB_TO_ACTION = {
 
 DIRECTIONS = {"north", "south", "east", "west", "up", "down"}
 
-SYSTEM_COMMANDS = {"inventory", "inv", "i", "status", "save", "quit", "exit", "help", "look", "context"}
+SYSTEM_COMMANDS = {"inventory", "inv", "i", "status", "save", "quit", "exit", "help", "look", "context", "journal"}
 DIALOGUE_CUE_VERBS = {"talk", "speak", "ask", "say", "chat", "persuade", "tell"}
 
 

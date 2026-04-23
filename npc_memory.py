@@ -51,6 +51,13 @@ class NPCMemoryRepository:
 
         return memory
 
+    def load_existing(self, npc_id: str) -> NPCConversationMemory | None:
+        path = self._memory_path(npc_id)
+        if not path.exists():
+            return None
+        raw = json.loads(path.read_text())
+        return NPCConversationMemory.model_validate(raw)
+
     def save(self, memory: NPCConversationMemory) -> None:
         path = self._memory_path(memory.npc_id)
         path.write_text(memory.model_dump_json(indent=2))

@@ -1,8 +1,8 @@
 {
   "npc_id": "barkeep",
   "npc_name": "Greta the Barkeep",
-  "summary": "",
-  "summarized_until_turn": 0,
+  "summary": "[hit Player] I don't know what you are on about. You need to leave now. I want no trouble. I will give you the key, but you need to leave now. *smile* I am not sure who you are, but I will trust you. [steal Rusty Key from Player] I'm not sure if I can trust you. You're acting strange. I can't find my memory, and I can't find my bar tender.",
+  "summarized_until_turn": 42,
   "turns": [
     {
       "speaker": "Player",
