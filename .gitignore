@@ -2,3 +2,4 @@ __pycache__/
 *.pyc
 test_save.json
 .env
+light-dialog-processed-small7.pkl

@@ -4,17 +4,16 @@ game.py - playable terminal prototype
 
 from world_state import WorldState
 from input_parser import parse_input
-from models import  Intent
-
+from models import Intent
 
 
 def main():
     ws = WorldState.load("game_state.json")
-    print("="*50)
+    print("=" * 50)
     print("  TEXT ADVENTURE — Engine Prototype")
     print("  Commands: go, take, drop, use, look,")
     print("  inventory, status, context, save, quit")
-    print("="*50)
+    print("=" * 50)
     print()
     print(ws.look())
     print()
@@ -40,10 +39,11 @@ def main():
                 print(ws.get_status())
             elif action.verb == "context":
                 import json
+
                 print(json.dumps(ws.world.model_dump(), indent=2))
             elif action.verb == "save":
                 ws.save("game_state.json")
-            elif action.verb in ("quit","exit","q"):
+            elif action.verb in ("quit", "exit", "q"):
                 print("Farewell, adventurer!")
                 break
             elif action.verb == "help":
@@ -77,16 +77,18 @@ def main():
                         _, msg = ws.use_item(action.target)
                         print(msg)
                 elif action.intent == Intent.COMBAT:
-                    print(f"You attack the {action.target}! (combat system coming soon)")
+                    print(
+                        f"You attack the {action.target}! (combat system coming soon)"
+                    )
                 elif action.intent == Intent.DIALOGUE:
-                    print(f"You talk to the {action.target}! (dialogue system coming soon)")
+                    print(
+                        f"You talk to the {action.target}! (dialogue system coming soon)"
+                    )
                 elif action.intent == Intent.INTERACTION:
                     print(f"You try to {action.verb}. (interaction system coming soon)")
         print()
 
 
-
 if __name__ == "__main__":
     main()
 
-      
