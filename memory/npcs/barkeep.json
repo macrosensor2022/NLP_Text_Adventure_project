@@ -1,0 +1,20 @@
+{
+  "npc_id": "barkeep",
+  "npc_name": "Greta the Barkeep",
+  "summary": "",
+  "summarized_until_turn": 0,
+  "turns": [
+    {
+      "speaker": "Player",
+      "text": "tell greta i wll continue to kick you",
+      "turn_index": 1,
+      "game_turn": 2
+    },
+    {
+      "speaker": "Greta the Barkeep",
+      "text": "[give mug to Player] You want to kick me? You don't know who you're messing with. Go ahead and try.",
+      "turn_index": 2,
+      "game_turn": 2
+    }
+  ]
+}

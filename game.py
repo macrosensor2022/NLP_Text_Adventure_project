@@ -10,32 +10,6 @@ from npc_memory import NPCMemoryRepository
 
 DEFAULT_DIALOGUE_FALLBACK = "They do not respond."
 NO_NPC_DIALOGUE_FALLBACK = "Are you talking to yourself right now? There is no one here."
-INVALID_NPC_DIALOGUE_FALLBACK = (
-    "Are you talking to yourself right now? You don't see that person here."
-)
-
-
-def resolve_dialogue_target(action, ws):
-    """Resolve dialogue target deterministically for one-NPC-per-room scope."""
-    if action.intent != Intent.DIALOGUE:
-        return action.target, None
-
-    current_room = ws.get_current_room()
-    npcs_here = ws.get_room_npcs(current_room.id)
-
-    if action.target:
-        if ws.is_npc_in_room(action.target, current_room.id):
-            return action.target, None
-        return None, INVALID_NPC_DIALOGUE_FALLBACK
-
-    if len(npcs_here) == 1:
-        return npcs_here[0].id, None
-
-    if not npcs_here:
-        return None, NO_NPC_DIALOGUE_FALLBACK
-
-    # Multi-NPC clarification is deferred while rooms are single-NPC scoped.
-    return None, "Who are you talking to?"
 
 
 def main():
@@ -89,12 +63,13 @@ def main():
                 print(f"Unknown command. Type 'help'.")
         else:
             if action.intent == Intent.DIALOGUE:
-                resolved_target, target_error = resolve_dialogue_target(action, ws)
-                if target_error:
-                    print(target_error)
+                current_room = ws.get_current_room()
+                npcs_here = ws.get_room_npcs(current_room.id)
+                if not npcs_here:
+                    print(NO_NPC_DIALOGUE_FALLBACK)
                     print()
                     continue
-                action.target = resolved_target
+                action.target = npcs_here[0].id
 
             ok, msg = ws.check_preconditions(action)
             if not ok:
@@ -117,10 +92,12 @@ def main():
                         _, msg = ws.use_item(action.target)
                         print(msg)
                 elif action.intent == Intent.COMBAT:
-                    print(
-                        f"You attack the {action.target}! (combat system coming soon)"
-                    )
-                elif action.intent == Intent.DIALOGUE:
+                    _, msg = ws.attack_npc(action.target)
+                    print(msg)
+                    if ws.get_player().hp <= 0:
+                        print("Farewell, adventurer!")
+                        break
+                elif action.intent == Intent.DIALOGUE or action.intent == Intent.INTERACTION:
                     npc = ws.get_npc(action.target) if action.target else None
                     if not npc:
                         print("That character isn't here.")
@@ -160,8 +137,6 @@ def main():
                         game_turn=ws.world.turn,
                     )
                     print(f"{npc.name}: {reply}")
-                elif action.intent == Intent.INTERACTION:
-                    print(f"You try to {action.verb}. (interaction system coming soon)")
         print()
 
 

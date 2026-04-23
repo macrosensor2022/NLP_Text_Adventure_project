@@ -7,24 +7,41 @@
     "inventory": [],
     "hp": 100,
     "max_hp": 100,
-    "skills": { "lockpick": 2, "persuasion": 3 }
+    "skills": {
+      "lockpick": 2,
+      "persuasion": 3
+    }
   },
   "rooms": {
     "tavern": {
       "id": "tavern",
       "name": "The Rusty Flagon",
-      "description": "A dimly lit tavern with creaky floorboards. The smell of stale ale hangs in the air. A fire crackles in the corner.",
-      "exits": { "north": "hallway", "east": "cellar_stairs" },
-      "items": ["rusty_key", "torch"],
-      "npcs": ["barkeep"],
+      "description": "A dimly lit tavern with creaky floorboards and old oak beams. Rain taps the shutters while a fire pops in the stone hearth.",
+      "exits": {
+        "north": "hallway",
+        "east": "cellar_stairs"
+      },
+      "items": [
+        "rusty_key",
+        "torch",
+        "bandage"
+      ],
+      "npcs": [
+        "barkeep"
+      ],
       "locked": false,
       "requires": null
     },
     "hallway": {
       "id": "hallway",
       "name": "Stone Hallway",
-      "description": "A narrow stone corridor. Torchlight flickers on damp walls.",
-      "exits": { "south": "tavern", "east": "armory", "north": "courtyard" },
+      "description": "A narrow corridor lined with faded banners and cracked sconces. Footsteps echo along the damp stone.",
+      "exits": {
+        "south": "tavern",
+        "east": "armory",
+        "north": "courtyard",
+        "west": "chapel"
+      },
       "items": [],
       "npcs": [],
       "locked": false,
@@ -33,9 +50,15 @@
     "armory": {
       "id": "armory",
       "name": "Old Armory",
-      "description": "Rusted weapons line the walls. A few look salvageable.",
-      "exits": { "west": "hallway" },
-      "items": ["iron_sword", "wooden_shield"],
+      "description": "Weapon racks lean at odd angles and rusted armor stands in silent rows.",
+      "exits": {
+        "west": "hallway"
+      },
+      "items": [
+        "iron_sword",
+        "wooden_shield",
+        "obsidian_dagger"
+      ],
       "npcs": [],
       "locked": true,
       "requires": "rusty_key"
@@ -43,8 +66,11 @@
     "cellar_stairs": {
       "id": "cellar_stairs",
       "name": "Cellar Stairway",
-      "description": "A narrow spiral staircase descends into darkness.",
-      "exits": { "west": "tavern", "down": "cellar" },
+      "description": "A tight spiral staircase disappears into cool darkness below.",
+      "exits": {
+        "west": "tavern",
+        "down": "cellar"
+      },
       "items": [],
       "npcs": [],
       "locked": false,
@@ -53,71 +79,498 @@
     "cellar": {
       "id": "cellar",
       "name": "Wine Cellar",
-      "description": "Rows of dusty barrels fill the damp cellar. Something shuffles in the dark.",
-      "exits": { "up": "cellar_stairs" },
-      "items": ["health_potion"],
-      "npcs": ["giant_rat"],
+      "description": "Dusty barrels crowd the room, and pooled water reflects weak torchlight.",
+      "exits": {
+        "up": "cellar_stairs",
+        "east": "cistern"
+      },
+      "items": [
+        "health_potion",
+        "rope"
+      ],
+      "npcs": [
+        "giant_rat"
+      ],
       "locked": false,
       "requires": null
     },
     "courtyard": {
       "id": "courtyard",
       "name": "Castle Courtyard",
-      "description": "Overgrown grass pushes through cracked flagstones. A broken fountain stands in the center.",
-      "exits": { "south": "hallway" },
-      "items": ["old_map"],
-      "npcs": ["wandering_merchant"],
+      "description": "Overgrown flagstones surround a dry fountain etched with faded constellations.",
+      "exits": {
+        "south": "hallway",
+        "north": "gatehouse",
+        "east": "library"
+      },
+      "items": [
+        "old_map",
+        "lantern"
+      ],
+      "npcs": [
+        "wandering_merchant",
+        "ruins_guide"
+      ],
       "locked": false,
       "requires": null
+    },
+    "gatehouse": {
+      "id": "gatehouse",
+      "name": "Broken Gatehouse",
+      "description": "Collapsed battlements frame the courtyard entrance, and cold wind whistles through shattered crenellations.",
+      "exits": {
+        "south": "courtyard",
+        "east": "observatory"
+      },
+      "items": [
+        "crowbar"
+      ],
+      "npcs": [],
+      "locked": false,
+      "requires": null
+    },
+    "chapel": {
+      "id": "chapel",
+      "name": "Ashen Chapel",
+      "description": "Soot-stained pews face a broken altar where candlelight still burns against the gloom.",
+      "exits": {
+        "east": "hallway",
+        "north": "library"
+      },
+      "items": [
+        "silver_chalice",
+        "chapel_seal"
+      ],
+      "npcs": [
+        "chapel_caretaker"
+      ],
+      "locked": false,
+      "requires": null
+    },
+    "library": {
+      "id": "library",
+      "name": "Sable Library",
+      "description": "Tall shelves tower over reading desks, and loose pages murmur in drafts from unseen vents.",
+      "exits": {
+        "west": "courtyard",
+        "south": "chapel",
+        "east": "rune_hall",
+        "north": "observatory"
+      },
+      "items": [
+        "stained_note",
+        "scholar_quill",
+        "rune_tablet"
+      ],
+      "npcs": [
+        "apprentice_librarian"
+      ],
+      "locked": false,
+      "requires": null
+    },
+    "observatory": {
+      "id": "observatory",
+      "name": "Starfall Observatory",
+      "description": "A cracked dome reveals the sky. Brass instruments point at stars painted across the night.",
+      "exits": {
+        "west": "gatehouse",
+        "south": "library",
+        "down": "alchemy_lab"
+      },
+      "items": [
+        "moon_dial",
+        "astral_lens"
+      ],
+      "npcs": [
+        "astronomer_lyra"
+      ],
+      "locked": false,
+      "requires": null
+    },
+    "alchemy_lab": {
+      "id": "alchemy_lab",
+      "name": "Alchemical Laboratory",
+      "description": "Copper pipes hiss over cracked benches where reagents still bubble in glass coils.",
+      "exits": {
+        "up": "observatory",
+        "east": "mirror_sanctum",
+        "south": "cistern"
+      },
+      "items": [
+        "alchemy_reagent",
+        "etched_rune_key",
+        "floodgate_crank"
+      ],
+      "npcs": [],
+      "locked": false,
+      "requires": null
+    },
+    "rune_hall": {
+      "id": "rune_hall",
+      "name": "Hall of Runes",
+      "description": "Glowing sigils pulse across the walls and floor, humming with restrained arcane power.",
+      "exits": {
+        "west": "library",
+        "east": "mirror_sanctum"
+      },
+      "items": [
+        "cistern_valve"
+      ],
+      "npcs": [
+        "arcane_sentinel"
+      ],
+      "locked": true,
+      "requires": "etched_rune_key"
+    },
+    "mirror_sanctum": {
+      "id": "mirror_sanctum",
+      "name": "Mirror Sanctum",
+      "description": "A circular chamber of black glass mirrors reflects impossible angles and distant candlelight.",
+      "exits": {
+        "west": "rune_hall",
+        "north": "alchemy_lab",
+        "down": "crypt_antechamber"
+      },
+      "items": [
+        "mirror_shard"
+      ],
+      "npcs": [],
+      "locked": false,
+      "requires": null
+    },
+    "cistern": {
+      "id": "cistern",
+      "name": "Sunken Cistern",
+      "description": "Water drips from vaulted stone, and submerged carvings hint at an older ruin beneath the castle.",
+      "exits": {
+        "west": "cellar",
+        "north": "alchemy_lab",
+        "east": "crypt_antechamber"
+      },
+      "items": [],
+      "npcs": [],
+      "locked": false,
+      "requires": null
+    },
+    "crypt_antechamber": {
+      "id": "crypt_antechamber",
+      "name": "Crypt Antechamber",
+      "description": "Crumbled sarcophagi flank a bronze floodgate engraved with warnings in two dead tongues.",
+      "exits": {
+        "west": "cistern",
+        "up": "mirror_sanctum",
+        "east": "ancient_vault"
+      },
+      "items": [],
+      "npcs": [],
+      "locked": false,
+      "requires": null
+    },
+    "ancient_vault": {
+      "id": "ancient_vault",
+      "name": "Ancient Vault",
+      "description": "A sealed treasury filled with relics, stone tablets, and a ledger of forgotten dynasties.",
+      "exits": {
+        "west": "crypt_antechamber"
+      },
+      "items": [
+        "vault_ledger"
+      ],
+      "npcs": [],
+      "locked": true,
+      "requires": "floodgate_crank"
     }
   },
   "items": {
     "rusty_key": {
-      "id": "rusty_key", "name": "Rusty Key",
+      "id": "rusty_key",
+      "name": "Rusty Key",
       "description": "A heavy iron key covered in rust.",
-      "is_weapon": false, "is_key": true, "damage": 0, "unlocks": "armory"
+      "is_weapon": false,
+      "is_key": true,
+      "damage": 0,
+      "unlocks": "armory"
     },
     "torch": {
-      "id": "torch", "name": "Wooden Torch",
-      "description": "A simple torch that provides light.",
-      "is_weapon": false, "is_key": false, "damage": 0, "unlocks": null
+      "id": "torch",
+      "name": "Wooden Torch",
+      "description": "A simple torch wrapped in old pitch cloth.",
+      "is_weapon": false,
+      "is_key": false,
+      "damage": 0,
+      "unlocks": null
     },
     "iron_sword": {
-      "id": "iron_sword", "name": "Iron Sword",
-      "description": "A battered but functional sword.",
-      "is_weapon": true, "is_key": false, "damage": 15, "unlocks": null
+      "id": "iron_sword",
+      "name": "Iron Sword",
+      "description": "A battered but balanced sword with a chipped crossguard.",
+      "is_weapon": true,
+      "is_key": false,
+      "damage": 15,
+      "unlocks": null
     },
     "wooden_shield": {
-      "id": "wooden_shield", "name": "Wooden Shield",
-      "description": "A round wooden shield with iron bands.",
-      "is_weapon": false, "is_key": false, "damage": 0, "unlocks": null
+      "id": "wooden_shield",
+      "name": "Wooden Shield",
+      "description": "A round shield reinforced with cracked iron bands.",
+      "is_weapon": false,
+      "is_key": false,
+      "damage": 0,
+      "unlocks": null
     },
     "health_potion": {
-      "id": "health_potion", "name": "Health Potion",
-      "description": "A small glass vial filled with red liquid.",
-      "is_weapon": false, "is_key": false, "damage": 0, "unlocks": null
+      "id": "health_potion",
+      "name": "Health Potion",
+      "description": "A small vial of red tonic that smells of mint and copper.",
+      "is_weapon": false,
+      "is_key": false,
+      "damage": 0,
+      "unlocks": null
     },
     "old_map": {
-      "id": "old_map", "name": "Faded Map",
-      "description": "An old parchment showing the castle layout.",
-      "is_weapon": false, "is_key": false, "damage": 0, "unlocks": null
+      "id": "old_map",
+      "name": "Faded Map",
+      "description": "A worn map showing the old fortress and buried waterworks.",
+      "is_weapon": false,
+      "is_key": false,
+      "damage": 0,
+      "unlocks": null
+    },
+    "bandage": {
+      "id": "bandage",
+      "name": "Linen Bandage",
+      "description": "Clean linen strips bundled with a bronze pin.",
+      "is_weapon": false,
+      "is_key": false,
+      "damage": 0,
+      "unlocks": null
+    },
+    "rope": {
+      "id": "rope",
+      "name": "Coiled Rope",
+      "description": "A sturdy hemp rope with knots every arm's length.",
+      "is_weapon": false,
+      "is_key": false,
+      "damage": 0,
+      "unlocks": null
+    },
+    "obsidian_dagger": {
+      "id": "obsidian_dagger",
+      "name": "Obsidian Dagger",
+      "description": "A black volcanic blade with a wrapped leather grip.",
+      "is_weapon": true,
+      "is_key": false,
+      "damage": 10,
+      "unlocks": null
+    },
+    "lantern": {
+      "id": "lantern",
+      "name": "Brass Lantern",
+      "description": "A hinged brass lantern with a smoky glass pane.",
+      "is_weapon": false,
+      "is_key": false,
+      "damage": 0,
+      "unlocks": null
+    },
+    "crowbar": {
+      "id": "crowbar",
+      "name": "Iron Crowbar",
+      "description": "A bent iron pry bar, useful for forcing old boards.",
+      "is_weapon": true,
+      "is_key": false,
+      "damage": 8,
+      "unlocks": null
+    },
+    "silver_chalice": {
+      "id": "silver_chalice",
+      "name": "Silver Chalice",
+      "description": "A ritual cup engraved with stars and wave motifs.",
+      "is_weapon": false,
+      "is_key": false,
+      "damage": 0,
+      "unlocks": null
+    },
+    "chapel_seal": {
+      "id": "chapel_seal",
+      "name": "Chapel Seal",
+      "description": "A wax-and-bronze seal bearing the castle crest.",
+      "is_weapon": false,
+      "is_key": false,
+      "damage": 0,
+      "unlocks": null
+    },
+    "stained_note": {
+      "id": "stained_note",
+      "name": "Stained Note",
+      "description": "A note hinting that moonlight reveals the true rune sequence.",
+      "is_weapon": false,
+      "is_key": false,
+      "damage": 0,
+      "unlocks": null
+    },
+    "scholar_quill": {
+      "id": "scholar_quill",
+      "name": "Scholar's Quill",
+      "description": "A raven-feather quill balanced for neat script.",
+      "is_weapon": false,
+      "is_key": false,
+      "damage": 0,
+      "unlocks": null
+    },
+    "rune_tablet": {
+      "id": "rune_tablet",
+      "name": "Rune Tablet",
+      "description": "A stone tablet showing four glyphs and a mirrored fifth mark.",
+      "is_weapon": false,
+      "is_key": false,
+      "damage": 0,
+      "unlocks": null
+    },
+    "moon_dial": {
+      "id": "moon_dial",
+      "name": "Moon Dial",
+      "description": "A brass disk that aligns with lunar phases and etched runes.",
+      "is_weapon": false,
+      "is_key": false,
+      "damage": 0,
+      "unlocks": null
+    },
+    "astral_lens": {
+      "id": "astral_lens",
+      "name": "Astral Lens",
+      "description": "A crystal lens that refracts light into thin spectral lines.",
+      "is_weapon": false,
+      "is_key": false,
+      "damage": 0,
+      "unlocks": null
+    },
+    "alchemy_reagent": {
+      "id": "alchemy_reagent",
+      "name": "Volatile Reagent",
+      "description": "A corked flask of bright blue alchemical concentrate.",
+      "is_weapon": false,
+      "is_key": false,
+      "damage": 0,
+      "unlocks": null
+    },
+    "etched_rune_key": {
+      "id": "etched_rune_key",
+      "name": "Etched Rune Key",
+      "description": "A bronze key etched with the same glyphs found in the library tablet.",
+      "is_weapon": false,
+      "is_key": true,
+      "damage": 0,
+      "unlocks": "rune_hall"
+    },
+    "floodgate_crank": {
+      "id": "floodgate_crank",
+      "name": "Floodgate Crank",
+      "description": "A removable valve crank sized to fit old ruin machinery.",
+      "is_weapon": false,
+      "is_key": true,
+      "damage": 0,
+      "unlocks": "ancient_vault"
+    },
+    "cistern_valve": {
+      "id": "cistern_valve",
+      "name": "Cistern Valve",
+      "description": "A corroded wheel-valve that still turns with effort.",
+      "is_weapon": false,
+      "is_key": false,
+      "damage": 0,
+      "unlocks": null
+    },
+    "mirror_shard": {
+      "id": "mirror_shard",
+      "name": "Mirror Shard",
+      "description": "A sharp shard of enchanted mirror that reflects scenes not in front of you.",
+      "is_weapon": false,
+      "is_key": false,
+      "damage": 0,
+      "unlocks": null
+    },
+    "vault_ledger": {
+      "id": "vault_ledger",
+      "name": "Vault Ledger",
+      "description": "A heavy ledger documenting relic transfers and hidden chamber payments.",
+      "is_weapon": false,
+      "is_key": false,
+      "damage": 0,
+      "unlocks": null
     }
   },
   "npcs": {
     "barkeep": {
-      "id": "barkeep", "name": "Greta the Barkeep",
-      "description": "A stout woman with kind eyes and strong arms.",
-      "current_room": "tavern", "attitude": 30, "dialogue_state": "default", "hp": 50
+      "id": "barkeep",
+      "name": "Greta the Barkeep",
+      "description": "A stout woman with kind eyes and an excellent memory for faces.",
+      "current_room": "tavern",
+      "attitude": 30,
+      "dialogue_state": "default",
+      "hp": 50
     },
     "giant_rat": {
-      "id": "giant_rat", "name": "Giant Rat",
-      "description": "A rat the size of a dog. Its eyes gleam red.",
-      "current_room": "cellar", "attitude": -80, "dialogue_state": "default", "hp": 25
+      "id": "giant_rat",
+      "name": "Giant Rat",
+      "description": "A cellar rat as large as a hound, always watching from the dark.",
+      "current_room": "cellar",
+      "attitude": -80,
+      "dialogue_state": "default",
+      "hp": 25
     },
     "wandering_merchant": {
-      "id": "wandering_merchant", "name": "Elric the Merchant",
-      "description": "A thin man in a travel-worn cloak surrounded by trinkets.",
-      "current_room": "courtyard", "attitude": 0, "dialogue_state": "default", "hp": 30
+      "id": "wandering_merchant",
+      "name": "Elric the Merchant",
+      "description": "A road-worn trader who always seems to carry exactly what people need.",
+      "current_room": "courtyard",
+      "attitude": 0,
+      "dialogue_state": "default",
+      "hp": 30
+    },
+    "apprentice_librarian": {
+      "id": "apprentice_librarian",
+      "name": "Mira the Apprentice",
+      "description": "A focused young librarian cataloging damaged tomes and rune fragments.",
+      "current_room": "library",
+      "attitude": 40,
+      "dialogue_state": "default",
+      "hp": 35
+    },
+    "chapel_caretaker": {
+      "id": "chapel_caretaker",
+      "name": "Brother Alden",
+      "description": "An elderly caretaker who keeps the chapel lit and offers practical advice.",
+      "current_room": "chapel",
+      "attitude": 25,
+      "dialogue_state": "default",
+      "hp": 40
+    },
+    "astronomer_lyra": {
+      "id": "astronomer_lyra",
+      "name": "Lyra the Astronomer",
+      "description": "A calm scholar studying how starlight reacts to ancient runes.",
+      "current_room": "observatory",
+      "attitude": 15,
+      "dialogue_state": "default",
+      "hp": 35
+    },
+    "ruins_guide": {
+      "id": "ruins_guide",
+      "name": "Tovan the Guide",
+      "description": "A patient ruins guide who knows which stones are stable and which are traps.",
+      "current_room": "courtyard",
+      "attitude": 10,
+      "dialogue_state": "default",
+      "hp": 38
+    },
+    "arcane_sentinel": {
+      "id": "arcane_sentinel",
+      "name": "Arcane Sentinel",
+      "description": "A floating construct that guards rune chambers with suspicious intelligence.",
+      "current_room": "rune_hall",
+      "attitude": -20,
+      "dialogue_state": "default",
+      "hp": 60
     }
   }
 }

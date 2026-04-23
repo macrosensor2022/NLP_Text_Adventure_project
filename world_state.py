@@ -214,6 +214,79 @@ class WorldState:
             return True, f"You take {amount} damage and collapse. Game over."
         return True, f"You take {amount} damage. You have {self.world.player.hp} HP remaining."
 
+    def attack_npc(self, npc_id: str) -> tuple[bool, str]:
+        npc = self.get_npc(npc_id)
+        if not npc:
+            return False, "That character doesn't exist."
+
+        current_room = self.get_current_room()
+        if not self.is_npc_in_room(npc_id, current_room.id):
+            return False, "That character isn't here."
+        if npc.hp <= 0:
+            return False, f"{npc.name} has already been defeated."
+
+        weapons = [i for i in self.get_player_inventory() if i.is_weapon]
+        weapon = max(weapons, key=lambda i: i.damage, default=None)
+        player_damage = 5 + (weapon.damage if weapon else 0)
+        weapon_name = weapon.name if weapon else "fists"
+        npc_old_hp = npc.hp
+        npc.hp = max(0, npc.hp - player_damage)
+        self._log_event(
+            f"Player attacked {npc.name} with {weapon_name} for {player_damage} damage.",
+            [
+                StateChange(
+                    entity_type="npc",
+                    entity_id=npc.id,
+                    field="hp",
+                    old_value=str(npc_old_hp),
+                    new_value=str(npc.hp),
+                )
+            ],
+        )
+
+        if npc.hp <= 0:
+            if npc.id in current_room.npcs:
+                current_room.npcs.remove(npc.id)
+            self._log_event(
+                f"{npc.name} was defeated.",
+                [
+                    StateChange(
+                        entity_type="room",
+                        entity_id=current_room.id,
+                        field="remove_npc",
+                        old_value=npc.id,
+                        new_value=None,
+                    )
+                ],
+            )
+            return True, f"You strike with {weapon_name} for {player_damage} damage and defeat {npc.name}."
+
+        counter_damage = max(1, 4 + max(0, npc.attitude // 25))
+        player_old_hp = self.world.player.hp
+        self.world.player.hp = max(0, self.world.player.hp - counter_damage)
+        self._log_event(
+            f"{npc.name} counterattacked for {counter_damage} damage.",
+            [
+                StateChange(
+                    entity_type="player",
+                    entity_id="player",
+                    field="hp",
+                    old_value=str(player_old_hp),
+                    new_value=str(self.world.player.hp),
+                )
+            ],
+        )
+
+        outcome = (
+            f"{npc.name} hits back for {counter_damage}. You collapse. Game over."
+            if self.world.player.hp <= 0
+            else f"{npc.name} hits back for {counter_damage}. You have {self.world.player.hp} HP remaining."
+        )
+        return True, (
+            f"You strike with {weapon_name} for {player_damage} damage. "
+            f"{npc.name} has {npc.hp} HP left. {outcome}"
+        )
+
     # Deterministic precondition checks
     def check_preconditions(self, action: ParsedAction) -> tuple[bool, str]:
         """
@@ -264,6 +337,11 @@ class WorldState:
                 return False, "Attack Who?"
             if not self.is_npc_in_room(action.target, current_room.id):
                 return False, "That character isn't here."
+            npc = self.get_npc(action.target)
+            if not npc:
+                return False, "That character doesn't exist."
+            if npc.hp <= 0:
+                return False, f"{npc.name} has already been defeated."
             return True, "OK"
 
         if action.intent == Intent.INTERACTION:
