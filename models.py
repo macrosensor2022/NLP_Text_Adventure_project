@@ -3,6 +3,9 @@ from pydantic import BaseModel, Field
 from typing import Optional, Any
 from enum import Enum
 
+MAX_RECENT_TURNS = 8
+MEMORY_BUDGET_RATIO = 0.6
+
 #Intent categories 
 class  Intent(str,Enum):
     MOVEMENT = "MOVEMENT"
@@ -89,3 +92,18 @@ class GameWorld(BaseModel):
     player:Player
     turn:int = 0
     events:list[Event] = [] 
+
+
+class ConversationTurn(BaseModel):
+    speaker: str
+    text: str
+    turn_index: int = Field(ge=1)
+    game_turn: Optional[int] = None
+
+
+class NPCConversationMemory(BaseModel):
+    npc_id: str
+    npc_name: str
+    summary: str = ""
+    summarized_until_turn: int = 0
+    turns: list[ConversationTurn] = []
