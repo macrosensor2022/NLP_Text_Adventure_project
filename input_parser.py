@@ -1,6 +1,7 @@
 import spacy
 from models import ParsedAction, Intent
 from typing import Optional
+from inference import rewrite_to_command
 
 nlp = spacy.load("en_core_web_sm")
 
@@ -95,7 +96,7 @@ def match_entity(text: str, world_state) -> Optional[str]:
     return None
 
 
-def parse_input(raw: str, world_state) -> ParsedAction:
+def parse_input(raw: str, world_state, _allow_rewrite: bool = True) -> ParsedAction:
     """
     Takes raw player text and returns a ParsedAction.
 
@@ -190,5 +191,10 @@ def parse_input(raw: str, world_state) -> ParsedAction:
                         instrument_id = match_entity(instrument_text, world_state)
                         if instrument_id:
                             requires.append(instrument_id)
+
+    if _allow_rewrite and intent == Intent.INTERACTION and target_id is None:
+        rewritten = rewrite_to_command(raw)
+        if rewritten and rewritten != raw:
+            return parse_input(rewritten, world_state, _allow_rewrite=False)
 
     return ParsedAction(intent=intent, verb=standard_verb, target=target_id, direction=direction, requires=requires)

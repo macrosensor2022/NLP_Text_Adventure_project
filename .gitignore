@@ -3,3 +3,4 @@ __pycache__/
 test_save.json
 .env
 light-dialog-processed-small7.pkl
+.idea/

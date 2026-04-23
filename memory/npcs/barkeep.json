@@ -15,6 +15,18 @@
       "text": "[give mug to Player] You want to kick me? You don't know who you're messing with. Go ahead and try.",
       "turn_index": 2,
       "game_turn": 2
+    },
+    {
+      "speaker": "Player",
+      "text": "hekko greta",
+      "turn_index": 3,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Greta the Barkeep",
+      "text": "what brings you here?",
+      "turn_index": 4,
+      "game_turn": 0
     }
   ]
 }

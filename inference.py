@@ -12,6 +12,8 @@ MODEL_PATH = "model/final/model-Q4_K_M.gguf"
 DEFAULT_FALLBACK_REPLY = "The NPC watches you silently and says nothing."
 DEFAULT_TEMPERATURE = 0.9
 DEFAULT_MAX_TOKENS = 128
+_REWRITE_DIRECTIONS = {"north", "south", "east", "west", "up", "down"}
+_REWRITE_VERBS = {"go", "take", "drop", "use", "attack", "talk"}
 
 _MODEL: Any = None
 
@@ -93,6 +95,40 @@ def _build_messages(
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": user_prompt},
     ]
+
+
+def rewrite_to_command(raw_text: str) -> str | None:
+    raw_text = (raw_text or "").strip()
+    if not raw_text:
+        return None
+
+    system_prompt = (
+        "Rewrite the player input as exactly one command for a text adventure.\n"
+        "Allowed verbs: go, take, drop, use, attack, talk.\n"
+        "Output format: '<verb> <target_or_direction>' only.\n"
+        "For go, direction must be one of north/south/east/west/up/down.\n"
+        "Return only the command, no punctuation or commentary."
+    )
+    try:
+        model = _get_model()
+        response = model.create_chat_completion(
+            messages=[{"role": "system", "content": system_prompt}, {"role": "user", "content": raw_text}],
+            max_tokens=24,
+            temperature=0.1,
+        )
+        content = response["choices"][0]["message"]["content"]
+    except Exception:
+        return None
+
+    rewritten = " ".join(str(content).strip().lower().split())
+    if not rewritten:
+        return None
+    parts = rewritten.split(maxsplit=1)
+    if parts[0] not in _REWRITE_VERBS or len(parts) < 2:
+        return None
+    if parts[0] == "go" and parts[1] not in _REWRITE_DIRECTIONS:
+        return None
+    return rewritten
 
 
 def generate_npc_reply(
