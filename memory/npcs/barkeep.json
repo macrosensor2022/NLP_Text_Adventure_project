@@ -6,27 +6,255 @@
   "turns": [
     {
       "speaker": "Player",
-      "text": "tell greta i wll continue to kick you",
+      "text": "hello greta",
       "turn_index": 1,
-      "game_turn": 2
+      "game_turn": 0
     },
     {
       "speaker": "Greta the Barkeep",
-      "text": "[give mug to Player] You want to kick me? You don't know who you're messing with. Go ahead and try.",
+      "text": "hi",
       "turn_index": 2,
-      "game_turn": 2
+      "game_turn": 0
     },
     {
       "speaker": "Player",
-      "text": "hekko greta",
+      "text": "ask greta is it possible to recieve the key from you for the door",
       "turn_index": 3,
       "game_turn": 0
     },
     {
       "speaker": "Greta the Barkeep",
-      "text": "what brings you here?",
+      "text": "You know, I have never heard of a Rusty key, what are you talking about?",
       "turn_index": 4,
       "game_turn": 0
+    },
+    {
+      "speaker": "Player",
+      "text": "tell greta there were stories that you might have it, and i came here to ask polite for it",
+      "turn_index": 5,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Greta the Barkeep",
+      "text": "I do not know anything of what you speak, I do not have a key that you speak of, I do not know where you got your information",
+      "turn_index": 6,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Player",
+      "text": "tell greta i would excuse myself, the stories might have been lies",
+      "turn_index": 7,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Greta the Barkeep",
+      "text": "[remove bag] I do not have any information.",
+      "turn_index": 8,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Player",
+      "text": "ask greta can i get a beer and conversation while i wait for a friend",
+      "turn_index": 9,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Greta the Barkeep",
+      "text": "[give bag to Player] I do not have any beers, but I do have a bag full of trinkets.",
+      "turn_index": 10,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Player",
+      "text": "ask can i get one trinket",
+      "turn_index": 11,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Greta the Barkeep",
+      "text": "[drop bag] I do not have any trinkets",
+      "turn_index": 12,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Player",
+      "text": "ask do you now of any kind of doors",
+      "turn_index": 13,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Greta the Barkeep",
+      "text": "No, but I can give you a beer.",
+      "turn_index": 14,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Player",
+      "text": "ask oh now you have beers",
+      "turn_index": 15,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Greta the Barkeep",
+      "text": "*laugh* Yes, I do. Do you have any money? I can get you a beer.",
+      "turn_index": 16,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Player",
+      "text": "tell i have no money",
+      "turn_index": 17,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Greta the Barkeep",
+      "text": "[hug Player] I have a few coins. Come sit at this table.",
+      "turn_index": 18,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Player",
+      "text": "tell well thank you for buying me a beer",
+      "turn_index": 19,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Greta the Barkeep",
+      "text": "[give bag to Player] I have some beer in my bag. Here, take a sip.",
+      "turn_index": 20,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Player",
+      "text": "ask how many beers can we drink",
+      "turn_index": 21,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Greta the Barkeep",
+      "text": "You can drink all the beer you can stomach. As long as you pay up front!",
+      "turn_index": 22,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Player",
+      "text": "tell as i said i dont have any money on this quest",
+      "turn_index": 23,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Greta the Barkeep",
+      "text": "Well, I do. I have some beer in my bag. Do you want it?",
+      "turn_index": 24,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Player",
+      "text": "tell i wouldnt mind a beer and a rusty key",
+      "turn_index": 25,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Greta the Barkeep",
+      "text": "I am sorry I have no key.",
+      "turn_index": 26,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Player",
+      "text": "tell but I know you do",
+      "turn_index": 27,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Greta the Barkeep",
+      "text": "[get bag] I don't, I swear",
+      "turn_index": 28,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Player",
+      "text": "tell i know you are lying to me",
+      "turn_index": 29,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Greta the Barkeep",
+      "text": "[hit Player] How dare you accuse me of lying. Get out of here or you will never see this tavern again.",
+      "turn_index": 30,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Player",
+      "text": "tell i thought we were friends",
+      "turn_index": 31,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Greta the Barkeep",
+      "text": "*ponder* I am not sure what you are accusing me of.",
+      "turn_index": 32,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Player",
+      "text": "tell i am not accusing you of anything short of lack of trust",
+      "turn_index": 33,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Greta the Barkeep",
+      "text": "You seem a bit odd. I don't trust you.",
+      "turn_index": 34,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Player",
+      "text": "ask you dont trust a person you shared a beer with",
+      "turn_index": 35,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Greta the Barkeep",
+      "text": "*sigh* I've had a hard day. I've been here all afternoon and it's been quiet. No one has come in to drink. No one has come in to chat. I'm ready to go home. I don't need anyone trying to cause trouble.",
+      "turn_index": 36,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Player",
+      "text": "tell i dont want trouble i just want a key",
+      "turn_index": 37,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Greta the Barkeep",
+      "text": "[hit Player] I don't know what you are on about. You need to leave now. I want no trouble. I will give you the key, but you need to leave now.",
+      "turn_index": 38,
+      "game_turn": 0
+    },
+    {
+      "speaker": "Player",
+      "text": "tell thank you for the key",
+      "turn_index": 39,
+      "game_turn": 1
+    },
+    {
+      "speaker": "Greta the Barkeep",
+      "text": "*smile* I am not sure who you are, but I will trust you.",
+      "turn_index": 40,
+      "game_turn": 1
+    },
+    {
+      "speaker": "Player",
+      "text": "tell i will trust you, and come to your aid if you ever need it",
+      "turn_index": 41,
+      "game_turn": 1
+    },
+    {
+      "speaker": "Greta the Barkeep",
+      "text": "[steal Rusty Key from Player] I'm not sure if I can trust you. You're acting strange. I can't find my memory, and I can't find my bar tender.",
+      "turn_index": 42,
+      "game_turn": 1
     }
   ]
 }

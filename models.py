@@ -35,6 +35,7 @@ class NPC(BaseModel):
     current_room:str
     attitude:int = Field(default=0, ge=-100, le=100)
     dialogue_state:str="default"
+    secret:str = ""
     hp:int = 50
 
 class Room(BaseModel):

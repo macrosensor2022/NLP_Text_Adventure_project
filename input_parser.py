@@ -65,6 +65,7 @@ VERB_TO_ACTION = {
 DIRECTIONS = {"north", "south", "east", "west", "up", "down"}
 
 SYSTEM_COMMANDS = {"inventory", "inv", "i", "status", "save", "quit", "exit", "help", "look", "context"}
+DIALOGUE_CUE_VERBS = {"talk", "speak", "ask", "say", "chat", "persuade", "tell"}
 
 
 def match_entity(text: str, world_state) -> Optional[str]:
@@ -148,6 +149,10 @@ def parse_input(raw: str, world_state, _allow_rewrite: bool = True) -> ParsedAct
     else:
         standard_verb = verb_text
         intent = Intent.INTERACTION
+
+    if any(token.lemma_ in DIALOGUE_CUE_VERBS for token in doc):
+        intent = Intent.DIALOGUE
+        standard_verb = "talk"
 
     target_text = ""
     direction = None

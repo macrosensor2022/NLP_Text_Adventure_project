@@ -507,6 +507,7 @@
       "current_room": "tavern",
       "attitude": 30,
       "dialogue_state": "default",
+      "secret": "The old armory door opens with the Rusty Key, and she keeps one hidden beneath the tavern counter.",
       "hp": 50
     },
     "giant_rat": {
@@ -516,6 +517,7 @@
       "current_room": "cellar",
       "attitude": -80,
       "dialogue_state": "default",
+      "secret": "There is a dry crawlspace behind the wine barrels where small valuables are often stashed.",
       "hp": 25
     },
     "wandering_merchant": {
@@ -525,6 +527,7 @@
       "current_room": "courtyard",
       "attitude": 0,
       "dialogue_state": "default",
+      "secret": "He knows the quickest safe route from the courtyard to the observatory through the gatehouse.",
       "hp": 30
     },
     "apprentice_librarian": {
@@ -534,6 +537,7 @@
       "current_room": "library",
       "attitude": 40,
       "dialogue_state": "default",
+      "secret": "The Rune Tablet and Stained Note together hint that mirrored moonlight reveals the rune order.",
       "hp": 35
     },
     "chapel_caretaker": {
@@ -543,6 +547,7 @@
       "current_room": "chapel",
       "attitude": 25,
       "dialogue_state": "default",
+      "secret": "He has seen a hidden hinge near the chapel altar that leads toward forgotten archive passages.",
       "hp": 40
     },
     "astronomer_lyra": {
@@ -552,6 +557,7 @@
       "current_room": "observatory",
       "attitude": 15,
       "dialogue_state": "default",
+      "secret": "The Astral Lens can align moonlight on inscriptions to expose symbols invisible to the naked eye.",
       "hp": 35
     },
     "ruins_guide": {
@@ -561,6 +567,7 @@
       "current_room": "courtyard",
       "attitude": 10,
       "dialogue_state": "default",
+      "secret": "He knows the cistern floor pattern that avoids collapsed tiles near the crypt approach.",
       "hp": 38
     },
     "arcane_sentinel": {
@@ -570,6 +577,7 @@
       "current_room": "rune_hall",
       "attitude": -20,
       "dialogue_state": "default",
+      "secret": "The sentinel was keyed to the Etched Rune Key and cannot be bypassed without proper rune authorization.",
       "hp": 60
     }
   }

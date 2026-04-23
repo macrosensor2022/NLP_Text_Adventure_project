@@ -60,6 +60,7 @@ def _build_messages(
     npc_role = str(npc_info.get("role", "NPC"))
     npc_persona = str(npc_info.get("persona", "No persona details provided."))
     npc_attitude = npc_info.get("attitude", "unknown")
+    npc_secret = str(npc_info.get("secret", "")).strip() or "No specific secret."
 
     memory_summary = ""
     memory_recent_turns = []
@@ -82,10 +83,14 @@ def _build_messages(
         "You are an NPC in a text adventure game. "
         "Stay in-character, be concise, and do not describe impossible state changes.\n"
         "Keep your response consistent with your prior accepted dialogue when memory is provided.\n"
+        "You may hold secrets, clues, or items relevant to this area. Do not reveal them easily.\n"
+        "Only share key secrets or important items after trust-building dialogue or a clear, polite request from the player.\n"
+        "If not ready to share, give a subtle hint instead of the full secret.\n"
         f"NPC Name: {npc_name}\n"
         f"NPC Role: {npc_role}\n"
         f"NPC Persona: {npc_persona}\n"
         f"NPC Attitude: {npc_attitude}\n"
+        f"NPC Secret: {npc_secret}\n"
         f"World Context:\n{_stringify_context(compact_context)}"
         f"\nMemory Context:\n{chr(10).join(memory_section_lines)}"
     )

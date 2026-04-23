@@ -118,6 +118,7 @@ def main():
                         "role": npc.dialogue_state,
                         "persona": npc.description,
                         "attitude": npc.attitude,
+                        "secret": npc.secret,
                     }
                     memory = memory_repo.load(npc.id, npc.name)
                     npc_memory_context = memory_repo.build_prompt_context(memory)
